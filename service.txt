@@ -1,0 +1,17 @@
+[Unit]
+Description=Crow Analyzer Agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+Environment=CROW_CONF=/etc/crow/analyzer.env
+WorkingDirectory=/opt/crow-analyzer
+ExecStart=/opt/crow-analyzer/.venv/bin/python /opt/crow-analyzer/crow_analyzer_agent.py
+Restart=always
+RestartSec=3
+# You can switch to a dedicated user later
+User=root
+
+[Install]
+WantedBy=multi-user.target
