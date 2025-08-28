@@ -1,0 +1,17 @@
+# copy agent
+sudo mkdir -p /opt/crow-analyzer /etc/crow /var/lib/crow
+sudo cp crow_analyzer_agent.py /opt/crow-analyzer/
+sudo chmod +x /opt/crow-analyzer/crow_analyzer_agent.py
+
+# create config (edit with your values)
+sudo nano /etc/crow/analyzer.env
+
+# install deps (use venv to be clean)
+sudo apt-get update -y && sudo apt-get install -y python3 python3-venv python3-pip || true
+python3 -m venv /opt/crow-analyzer/.venv
+source /opt/crow-analyzer/.venv/bin/activate
+pip install --upgrade pip
+pip install psutil requests
+
+# run in foreground for first test
+CROW_CONF=/etc/crow/analyzer.env /opt/crow-analyzer/.venv/bin/python /opt/crow-analyzer/crow_analyzer_agent.py
